@@ -1,1 +1,101 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(74, 0, 104);
+  color: rgb(255, 255, 255);
+  font-family: Inter;
+  display: flex;
+  justify-content: center;
+}
 
+h1 {
+  display: flex;
+  font-family: Shizuru;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 96px;
+  line-height: 139px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.color-logo {
+  color: rgba(255, 118, 118, 1);
+}
+
+.todo__new {
+  width: 465px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 89px;
+  display: flex;
+  align-items: center;
+}
+
+.todo__new__input {
+  padding: 0;
+  margin-left: 18px;
+  width: 393px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(23, 0, 32);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 27px;
+  outline: none;
+  border: 0;
+  border-radius: 89px;
+}
+
+.btnAdd {
+  width: 54px;
+  height: 54px;
+  background: rgba(255, 118, 118, 1);
+  border-radius: 80px;
+  padding: 0;
+  outline: none;
+  border: none;
+}
+
+.btnAdd:hover {
+  background: rgb(148, 118, 255);
+}
+
+.todo__list {
+  padding: 0;
+  list-style-type: none;
+  width: 465px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.task {
+  margin-top: 10px;
+  width: 465px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 89px;
+}
+
+.task__description {
+  margin-left: 18px;
+  padding: 0;
+  width: 359px;
+  height: 53px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  color: #4a0068;
+  outline: none;
+  border: 0;
+  border-radius: 89px;
+}
