@@ -34,7 +34,7 @@ h1 {
   align-items: center;
 }
 
-.todo__new__input {
+.todo__input {
   padding: 0;
   margin-left: 18px;
   width: 393px;
@@ -71,7 +71,6 @@ h1 {
   width: 465px;
   display: flex;
   flex-direction: column;
-  list-style-type: none;
 }
 
 .task {
@@ -80,12 +79,14 @@ h1 {
   height: 54px;
   background-color: rgb(255, 255, 255);
   border-radius: 89px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .task__description {
-  margin-left: 18px;
   padding: 0;
-  width: 359px;
+  width: 350px;
   height: 53px;
   font-family: Inter;
   font-style: normal;
@@ -98,4 +99,53 @@ h1 {
   outline: none;
   border: 0;
   border-radius: 89px;
+}
+
+.btnDel {
+  width: 44px;
+  height: 44px;
+  background: #e3c1f0;
+  border-radius: 80px;
+  padding: 0;
+  outline: none;
+  border: none;
+}
+
+.btnDel:hover {
+  background: rgb(148, 118, 255);
+}
+
+.btnChecks {
+  outline: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 80px;
+  background: #ff7676;
+}
+
+.btnCheck {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.btnCheck + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.btnCheck + label::before {
+  content: "";
+  width: 44px;
+  height: 44px;
+  border-radius: 80px;
+  background: #ff7676;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.btnCheck:checked + label::before {
+  background-image: url("img/check.svg");
 }
