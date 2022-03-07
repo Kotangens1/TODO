@@ -19,6 +19,7 @@ h1 {
   line-height: 139px;
   text-align: center;
   color: rgb(255, 255, 255);
+  justify-content: center;
 }
 
 .color-logo {
@@ -125,8 +126,6 @@ h1 {
 }
 
 .btnCheck {
-  position: absolute;
-  z-index: -1;
   opacity: 0;
 }
 
