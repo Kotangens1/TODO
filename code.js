@@ -4,29 +4,27 @@ const btnAdd = document.querySelector(".btnAdd");
 let tasks = [];
 let task = 0;
 
-function createTask() {
+function createTask(tasks) {
     const task = {
     text: todo__input.value,
     id: Math.random(),
     isChecked: false
-} 
-    return task;
+    }   
+    tasks.push(task);
+    render(tasks);
 }
 
 function render(tasks)  {
-    todo__list.innerHTML += 
-    `            
-    <li class="task" id = "task${task.id}">
-        <input class="btnCheck" type="checkbox" id= "done${task.id}"><label for="done${task.id}"></label>
-        <div class="task__description">${task.text}</div>
-        <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
-    </li>
-    `;
+    let stringForRender = '';
+    tasks.forEach((item) => {
+    stringForRender += `<li class="task" id = "task${task.id}">
+    <input class="btnCheck" type="checkbox" id= "done${task.id}"><label for="done${task.id}"></label>
+    <div class="task__description">${tasks[tasks.length -1].text}</div>
+    <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
+    </li>`;});
+    todo__list.innerHTML = stringForRender;
 }
 
 btnAdd.addEventListener('click', () => {
-    task = createTask();
-    tasks += task;
-    render(tasks);
+    createTask(tasks);
 });
-
