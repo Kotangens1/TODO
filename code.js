@@ -1,14 +1,14 @@
-const todo__list = document.querySelector(".todo__list")
-const todo__input = document.querySelector(".todo__input");
+const todoList = document.querySelector(".todo__list")
+const todoInput = document.querySelector(".todo__input");
 const btnAdd = document.querySelector(".btnAdd");
 let tasks = [];
 let task = 0;
 
 function createTask(tasks) {
     const task = {
-    text: todo__input.value,
+    text: todoInput.value,
     id: Math.random(),
-    isChecked: false
+    isChecked: false,
     }   
     tasks.push(task);
     render(tasks);
@@ -16,15 +16,20 @@ function createTask(tasks) {
 
 function render(tasks)  {
     let stringForRender = '';
-    tasks.forEach((item) => {
+    tasks.forEach((task) => {
     stringForRender += `<li class="task" id = "task${task.id}">
     <input class="btnCheck" type="checkbox" id= "done${task.id}"><label for="done${task.id}"></label>
-    <div class="task__description">${tasks[tasks.length -1].text}</div>
+    <div class="task__description">${task.text}</div>
     <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
     </li>`;});
-    todo__list.innerHTML = stringForRender;
+    todoList.innerHTML = stringForRender;
+    todoInput.value = "";   
 }
 
 btnAdd.addEventListener('click', () => {
-    createTask(tasks);
+    createTask(tasks); 
 });
+
+document.addEventListener( 'keyup', event => {
+    if( event.code === 'Enter' ) createTask(tasks);
+  });

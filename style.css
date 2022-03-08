@@ -127,6 +127,7 @@ h1 {
 
 .btnCheck {
   opacity: 0;
+  position: absolute;
 }
 
 .btnCheck + label {
