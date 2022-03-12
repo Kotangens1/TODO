@@ -4,11 +4,15 @@ const btnAdd = document.querySelector(".btnAdd");
 let tasks = [];
 
 function createTask(tasks) {
+    const text = todoInput.value;
+    if (!text) return;
+    const text = todoInput.value.trim();
     const task = {
     text: todoInput.value,
     id: Math.random(),
-    isChecked: "",
-    }   
+    isChecked: false,
+    }
+
 
     tasks.push(task);
     render(tasks);
