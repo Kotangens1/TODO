@@ -1,1 +1,150 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(74, 0, 104);
+  color: rgb(255, 255, 255);
+  font-family: Inter;
+  display: flex;
+  justify-content: center;
+}
 
+h1 {
+  display: flex;
+  font-family: Shizuru;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 96px;
+  line-height: 139px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  justify-content: center;
+}
+
+.color-logo {
+  color: rgba(255, 118, 118, 1);
+}
+
+.todo__form {
+  width: 465px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 89px;
+  display: flex;
+  align-items: center;
+}
+
+.todo__input {
+  padding: 0;
+  margin-left: 18px;
+  width: 393px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(23, 0, 32);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 27px;
+  outline: none;
+  border: 0;
+  border-radius: 89px;
+}
+
+.btnAdd {
+  width: 54px;
+  height: 54px;
+  background: rgba(255, 118, 118, 1);
+  border-radius: 80px;
+  padding: 0;
+  outline: none;
+  border: none;
+}
+
+.btnAdd:hover {
+  background: rgb(148, 118, 255);
+}
+
+.todo__list {
+  padding: 0;
+  list-style-type: none;
+  width: 465px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task {
+  margin-top: 10px;
+  width: 465px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 89px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.task__description {
+  padding: 0;
+  width: 350px;
+  height: 53px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  color: #4a0068;
+  outline: none;
+  border: 0;
+  border-radius: 89px;
+}
+
+.btnDel {
+  width: 44px;
+  height: 44px;
+  background: #e3c1f0;
+  border-radius: 80px;
+  padding: 0;
+  outline: none;
+  border: none;
+}
+
+.btnDel:hover {
+  background: rgb(148, 118, 255);
+}
+
+.btnChecks {
+  outline: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 80px;
+  background: #ff7676;
+}
+
+.btnCheck {
+  display: none;
+}
+
+.btnCheck + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.btnCheck + label::before {
+  content: "";
+  width: 44px;
+  height: 44px;
+  border-radius: 80px;
+  background: #ff7676;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.btnCheck:checked + label::before {
+  background-image: url("img/check.svg");
+}
