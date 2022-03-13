@@ -1,48 +1,51 @@
-const todoList = document.querySelector(".todo__list")
-const todoInput = document.querySelector(".todo__input");
-const btnAdd = document.querySelector(".btnAdd");
-let tasks = [];
+const todoList = document.querySelector('.todo__list');
+const todoInput = document.querySelector('.todo__input');
+const btnAdd = document.querySelector('.btnAdd');
 
-function createTask(tasks) {
-    const text = todoInput.value;
-    if (!text) return;
-    const text = todoInput.value.trim();
-    const task = {
-    text: todoInput.value,
-    id: Math.random(),
-    isChecked: false,
-    }
+const tasks = [];
 
+const render = array => {
+  let stringForRender = '';
 
-    tasks.push(task);
-    render(tasks);
-}
-
-function render(tasks)  {
-    let stringForRender = '';
-
-    tasks.forEach((task) => {
+  array.forEach(task => {
     stringForRender += `<li class="task" id="${task.id}">
-    <input class="btnCheck" type="checkbox" ${task.isChecked ? "checked" : ""} id="checkbox_${task.id}"><label for="checkbox_${task.id}"></label>
+    <input class="btnCheck" type="checkbox" ${task.isChecked ? 'checked' : ''} id="checkbox_${task.id}">
+    <label for="checkbox_${task.id}"></label>
     <div class="task__description">${task.text}</div>
     <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
-    </li>`;});
-    
-    todoList.innerHTML = stringForRender; 
-}
+    </li>`;
+  });
 
-function clearInput() {
-    todoInput.value = "";  
-}
+  todoList.innerHTML = stringForRender;
+};
+
+const createTask = () => {
+  const text = todoInput.value.trim();
+
+  if (!text) return;
+
+  const task = {
+    id: Math.random(),
+    isChecked: false,
+    text,
+  };
+
+  tasks.push(task);
+  render(tasks);
+};
+
+const clearInput = () => {
+  todoInput.value = '';
+};
 
 btnAdd.addEventListener('click', () => {
-    createTask(tasks); 
-    clearInput();
+  createTask();
+  clearInput();
 });
 
-document.addEventListener( 'keypress', event => {
-    if( event.code === 'Enter' ) {
-    createTask(tasks);
+document.addEventListener('keypress', event => {
+  if (event.code === 'Enter') {
+    createTask();
     clearInput();
-    }
-  });
+  }
+});
