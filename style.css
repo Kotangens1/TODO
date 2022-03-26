@@ -22,8 +22,36 @@ h1 {
   justify-content: center;
 }
 
+.todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .color-logo {
   color: rgba(255, 118, 118, 1);
+}
+
+.todo__doneAll {
+  width: 100%;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: rgb(255, 255, 255);
+}
+
+.selected {
+  border: 1px solid #FFFFFF;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.btnDoneAll {
+  width: 31px;
+  height: 31px;
 }
 
 .todo__form {
@@ -36,6 +64,23 @@ h1 {
 }
 
 .todo__input {
+  padding: 0;
+  margin-left: 18px;
+  width: 393px;
+  height: 54px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(23, 0, 32);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 27px;
+  outline: none;
+  border: 0;
+  border-radius: 89px;
+}
+
+.todo__input__edit {
   padding: 0;
   margin-left: 18px;
   width: 393px;
@@ -96,16 +141,20 @@ h1 {
   line-height: 27px;
   display: flex;
   align-items: center;
-  color: #4a0068;
+  color: rgba(74, 0, 104, 1);
   outline: none;
   border: 0;
   border-radius: 89px;
 }
 
+.done {
+  color: rgba(74, 0, 104, 0.38);
+}
+
 .btnDel {
   width: 44px;
   height: 44px;
-  background: #e3c1f0;
+  background: rgba(227, 193, 240, 1);
   border-radius: 80px;
   padding: 0;
   outline: none;
@@ -122,7 +171,7 @@ h1 {
   width: 44px;
   height: 44px;
   border-radius: 80px;
-  background: #ff7676;
+  background: rgba(255, 118, 118, 1);
 }
 
 .btnCheck {
@@ -140,11 +189,31 @@ h1 {
   width: 44px;
   height: 44px;
   border-radius: 80px;
-  background: #ff7676;
+  background: rgba(255, 118, 118, 1);
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 .btnCheck:checked + label::before {
   background-image: url("img/check.svg");
+}
+
+.filters {
+  width: 210px;
+  height: 31px;
+  cursor: pointer;
+  list-style-type: none;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: rgb(255, 255, 255);
+}
+
+.filters input[type="radio"] {
+  width: 20px;
+  height: 20px;
 }

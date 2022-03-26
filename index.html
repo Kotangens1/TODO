@@ -16,6 +16,10 @@
 <body>
     <section class="todo">
         <h1>ToDo<span class="color-logo">list</span></h1>
+        <div class="todo__doneAll">
+            Done all
+            <input type="checkbox" class="btnDoneAll">
+        </div>
         <div class="todo__form">
             <input class="todo__input" type="text">
             
@@ -23,7 +27,23 @@
         </div>
         <ul class="todo__list">
         </ul>
-        
+        <ul class="filters">
+            <li>
+                <input type="radio" name="filter" class="filter__all">
+                All
+                <div class="number-of-all"></div>
+            </li>
+            <li>
+                <input type="radio" name="filter" class="filter__completed">
+                Completed
+                <div class="number-of-completed"></div>
+            </li>
+            <li>
+                <input type="radio" name="filter" class="filter__active">
+                Active
+                <div class="number-of-active"></div>
+            </li>
+        </ul>
     </section>
     <script src="code.js">
     </script>
