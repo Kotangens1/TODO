@@ -2,41 +2,27 @@ const todoList = document.querySelector('.todo__list');
 const todoInput = document.querySelector('.todo__input');
 const btnAdd = document.querySelector('.btnAdd');
 const btnDoneAll = document.querySelector('.btnDoneAll');
+const counter = document.querySelector('.counter');
 const filterAll = document.querySelector('.filter__all');
 const filterCompleted = document.querySelector('.filter__completed');
 const filterActive = document.querySelector('.filter__active');
-const numberOfActive = document.querySelector('.number-of-active');
-const numberOfCompleted = document.querySelector('.number-of-completed');
-const numberOfAll = document.querySelector('.number-of-all');
 
 const tasks = [];
 
-const activeTasks = () => {
-  let number = 0;
+const counting = () => {
+  const { length: completed } = tasks.filter(task => task.isChecked);
+  const notCompleted = tasks.length - completed;
 
-  tasks.forEach(task => {
-    if (!task.isChecked) {
-      number++;
-    }
-  });
+  if (tasks.length === completed) btnDoneAll.checked = true;
 
-  numberOfActive.innerHTML = number;
+  counter.innerHTML = `
+    <li>All ${tasks.length}</li>
+    <li>Completed ${completed}</li>
+    <li>Active ${notCompleted}</li>`;
 };
 
-const completedTasks = () => {
-  let number = 0;
-
-  tasks.forEach(task => {
-    if (task.isChecked) {
-      number++;
-    }
-  });
-  numberOfCompleted.innerHTML = number;
-};
-
-const allTasks = () => {
-  // eslint-disable-next-line prefer-destructuring
-  numberOfAll.innerHTML = tasks.length;
+const clearInput = () => {
+  todoInput.value = '';
 };
 
 const render = array => {
@@ -52,9 +38,8 @@ const render = array => {
   });
 
   todoList.innerHTML = stringForRender;
-  activeTasks();
-  completedTasks();
-  allTasks();
+  clearInput();
+  counting();
 };
 
 const createTask = () => {
@@ -64,7 +49,7 @@ const createTask = () => {
 
   const task = {
     id: Math.random(),
-    isChecked: false,
+    isChecked: btnDoneAll.checked,
     text,
   };
 
@@ -72,61 +57,53 @@ const createTask = () => {
   render(tasks);
 };
 
-const checkTask = event => {
+const saveChanges = ({ target }) => {
+  const { parentElement, value } = target;
+
   tasks.forEach(task => {
-    // eslint-disable-next-line prefer-destructuring
-    const currentTaskId = event.target.parentElement.id;
+    if (String(task.id) === parentElement.id) {
+      task.text = value;
+    }
+  });
+};
 
-    task.id = String(task.id);
+const checkTask = ({ target }) => {
+  // eslint-disable-next-line prefer-destructuring
+  const { id: currentTaskId } = target.parentElement;
 
-    if (task.id === currentTaskId) {
+  tasks.forEach(task => {
+    if (String(task.id) === currentTaskId) {
       task.isChecked = !task.isChecked;
     }
   });
 };
 
-const deleteTask = event => {
+const deleteTask = ({ target }) => {
+  const buttonDelete = target.parentElement;
+  const { id: currentTaskId } = buttonDelete.parentElement;
+
   tasks.forEach((task, index) => {
-    // eslint-disable-next-line prefer-destructuring
-    const currentTaskId = event.target.parentElement.parentElement.id;
-
-    task.id = String(task.id);
-
-    if (task.id === currentTaskId) {
+    if (String(task.id) === currentTaskId) {
       tasks.splice(index, 1);
     }
   });
 };
 
-const editDescription = event => {
+const editDescription = ({ target }) => {
+  const { parentElement } = target;
+
   tasks.forEach(task => {
-    // eslint-disable-next-line prefer-destructuring
-    const currentTaskId = event.target.parentElement.id;
-
-    task.id = String(task.id);
-
-    if (task.id === currentTaskId) {
-      event.target.parentElement.innerHTML = `<input type="text" class="todo__input__edit" value="${task.text}">`;
+    if (String(task.id) === parentElement.id) {
+      parentElement.innerHTML = `<input type="text" class="task__description-edit" value="${task.text}">`;
     }
   });
-};
 
-const saveChanges = event => {
-  tasks.forEach(task => {
-    // eslint-disable-next-line prefer-destructuring
-    const currentTaskId = event.target.parentElement.id;
+  const editInput = document.querySelector('.task__description-edit');
 
-    task.id = String(task.id);
-
-    if (task.id === currentTaskId) {
-      // eslint-disable-next-line prefer-destructuring
-      task.text = event.target.value;
-    }
-  });
-};
-
-const clearInput = () => {
-  todoInput.value = '';
+  editInput.onblur = function() {
+    saveChanges(event);
+    render(tasks);
+  };
 };
 
 const renderCompleted = () => {
@@ -176,7 +153,6 @@ const doneAll = () => {
 
 btnAdd.addEventListener('click', () => {
   createTask();
-  clearInput();
 });
 
 filterAll.addEventListener('click', () => {
@@ -194,7 +170,6 @@ filterActive.addEventListener('click', () => {
 document.addEventListener('keypress', event => {
   if (event.code === 'Enter') {
     createTask();
-    clearInput();
   }
 });
 
@@ -211,6 +186,7 @@ document.addEventListener('click', event => {
   const currentElementClicked = event.target.classList.contains('btnCheck');
 
   if (!currentElementClicked) return;
+  if (!event.target.checked) btnDoneAll.checked = false;
 
   checkTask(event);
   render(tasks);
@@ -227,7 +203,7 @@ document.addEventListener('dblclick', event => {
 document.addEventListener('keypress', event => {
   if (!(event.code === 'Enter')) return;
 
-  const currentElementClicked = event.target.classList.contains('todo__input__edit');
+  const currentElementClicked = event.target.classList.contains('task__description-edit');
 
   if (!currentElementClicked) return;
 

@@ -63,24 +63,7 @@ h1 {
   align-items: center;
 }
 
-.todo__input {
-  padding: 0;
-  margin-left: 18px;
-  width: 393px;
-  height: 54px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(23, 0, 32);
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 27px;
-  outline: none;
-  border: 0;
-  border-radius: 89px;
-}
-
-.todo__input__edit {
+.todo__input, .task__description-edit {
   padding: 0;
   margin-left: 18px;
   width: 393px;
@@ -198,9 +181,11 @@ h1 {
   background-image: url("img/check.svg");
 }
 
-.filters {
-  width: 210px;
+.filter {
+  padding: 0;
+  width: 293px;
   height: 31px;
+  margin: 0;
   cursor: pointer;
   list-style-type: none;
   font-weight: 200;
@@ -209,11 +194,11 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   color: rgb(255, 255, 255);
 }
 
-.filters input[type="radio"] {
-  width: 20px;
-  height: 20px;
+.filter input[type="radio"] {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
 }
