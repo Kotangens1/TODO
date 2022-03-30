@@ -7,13 +7,17 @@ const filterAll = document.querySelector('.filter__all');
 const filterCompleted = document.querySelector('.filter__completed');
 const filterActive = document.querySelector('.filter__active');
 
+const FILTER_TYPE_ALL = 'all';
+const FILTER_TYPE_COMPLETED = 'completed';
+const FILTER_TYPE_ACTIVE = 'active';
+
+let currentTab = FILTER_TYPE_ALL;
+
 const tasks = [];
 
 const counting = () => {
   const { length: completed } = tasks.filter(task => task.isChecked);
   const notCompleted = tasks.length - completed;
-
-  if (tasks.length === completed) btnDoneAll.checked = true;
 
   counter.innerHTML = `
     <li>All ${tasks.length}</li>
@@ -42,6 +46,37 @@ const render = array => {
   counting();
 };
 
+const makeRadioActive = () => {
+  if (currentTab === FILTER_TYPE_ALL) {
+    filterAll.checked = true;
+  }
+};
+
+const checkDoneAll = () => {
+  const isAllChecked = tasks.length && tasks.every(task => task.isChecked);
+
+  btnDoneAll.checked = isAllChecked;
+};
+
+const filterByRadio = type => {
+  currentTab = type;
+  let filteredArray = [];
+
+  if (type === FILTER_TYPE_ALL) {
+    filteredArray = tasks;
+  }
+  if (type === FILTER_TYPE_COMPLETED) {
+    filteredArray = tasks.filter(task => task.isChecked);
+  }
+  if (type === FILTER_TYPE_ACTIVE) {
+    filteredArray = tasks.filter(task => !task.isChecked);
+  }
+
+  checkDoneAll();
+  makeRadioActive();
+  render(filteredArray);
+};
+
 const createTask = () => {
   const text = todoInput.value.trim();
 
@@ -49,12 +84,12 @@ const createTask = () => {
 
   const task = {
     id: Math.random(),
-    isChecked: btnDoneAll.checked,
+    isChecked: false,
     text,
   };
 
   tasks.push(task);
-  render(tasks);
+  filterByRadio(FILTER_TYPE_ALL);
 };
 
 const saveChanges = ({ target }) => {
@@ -68,7 +103,6 @@ const saveChanges = ({ target }) => {
 };
 
 const checkTask = ({ target }) => {
-  // eslint-disable-next-line prefer-destructuring
   const { id: currentTaskId } = target.parentElement;
 
   tasks.forEach(task => {
@@ -76,6 +110,7 @@ const checkTask = ({ target }) => {
       task.isChecked = !task.isChecked;
     }
   });
+  filterByRadio(currentTab);
 };
 
 const deleteTask = ({ target }) => {
@@ -87,6 +122,7 @@ const deleteTask = ({ target }) => {
       tasks.splice(index, 1);
     }
   });
+  filterByRadio(currentTab);
 };
 
 const editDescription = ({ target }) => {
@@ -100,55 +136,17 @@ const editDescription = ({ target }) => {
 
   const editInput = document.querySelector('.task__description-edit');
 
-  editInput.onblur = function() {
-    saveChanges(event);
-    render(tasks);
-  };
-};
-
-const renderCompleted = () => {
-  let stringForRender = '';
-
-  tasks.forEach(task => {
-    if (task.isChecked) {
-      stringForRender += `<li class="task" id="${task.id}">
-        <input class="btnCheck" type="checkbox" ${task.isChecked ? 'checked' : ''} id="checkbox_${task.id}">
-        <label for="checkbox_${task.id}"></label>
-        <div class="task__description">${task.text}</div>
-        <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
-        </li>`;
-    }
+  editInput.addEventListener('blur', () => {
+    filterByRadio(currentTab);
   });
-  todoList.innerHTML = stringForRender;
-};
-
-const renderActive = () => {
-  let stringForRender = '';
-
-  tasks.forEach(task => {
-    if (!task.isChecked) {
-      stringForRender += `<li class="task" id="${task.id}">
-        <input class="btnCheck" type="checkbox" ${task.isChecked ? 'checked' : ''} id="checkbox_${task.id}">
-        <label for="checkbox_${task.id}"></label>
-        <div class="task__description">${task.text}</div>
-        <button  class="btnDel"><img src="img/del.svg" alt="удалить"></button>
-        </li>`;
-    }
-  });
-  todoList.innerHTML = stringForRender;
 };
 
 const doneAll = () => {
-  if (btnDoneAll.checked) {
-    tasks.forEach(task => {
-      task.isChecked = true;
-    });
-  }
-  if (!btnDoneAll.checked) {
-    tasks.forEach(task => {
-      task.isChecked = false;
-    });
-  }
+  const currentValue = btnDoneAll.checked;
+
+  tasks.forEach(task => {
+    task.isChecked = currentValue;
+  });
 };
 
 btnAdd.addEventListener('click', () => {
@@ -156,15 +154,15 @@ btnAdd.addEventListener('click', () => {
 });
 
 filterAll.addEventListener('click', () => {
-  render(tasks);
+  filterByRadio(FILTER_TYPE_ALL);
 });
 
 filterCompleted.addEventListener('click', () => {
-  renderCompleted();
+  filterByRadio(FILTER_TYPE_COMPLETED);
 });
 
 filterActive.addEventListener('click', () => {
-  renderActive();
+  filterByRadio(FILTER_TYPE_ACTIVE);
 });
 
 document.addEventListener('keypress', event => {
@@ -179,17 +177,14 @@ document.addEventListener('click', event => {
   if (!currentElementClicked) return;
 
   deleteTask(event);
-  render(tasks);
 });
 
 document.addEventListener('click', event => {
   const currentElementClicked = event.target.classList.contains('btnCheck');
 
   if (!currentElementClicked) return;
-  if (!event.target.checked) btnDoneAll.checked = false;
 
   checkTask(event);
-  render(tasks);
 });
 
 document.addEventListener('dblclick', event => {
@@ -208,7 +203,7 @@ document.addEventListener('keypress', event => {
   if (!currentElementClicked) return;
 
   saveChanges(event);
-  render(tasks);
+  filterByRadio(currentTab);
 });
 
 document.addEventListener('click', event => {
@@ -217,7 +212,7 @@ document.addEventListener('click', event => {
   if (!currentElementClicked) return;
 
   doneAll();
-  render(tasks);
+  filterByRadio(currentTab);
 });
 
 
