@@ -136,6 +136,7 @@ const editDescription = ({ target }) => {
 
   const editInput = document.querySelector('.task__description-edit');
 
+  editInput.focus();
   editInput.addEventListener('blur', () => {
     filterByRadio(currentTab);
   });
